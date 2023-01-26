@@ -21,17 +21,19 @@ using StringTools;
 
 class Main extends Sprite
 {
-	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var initialState:Class<FlxState> = states.InitState; // The FlxState the game starts with.
-	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
-	public static var framerate:Int = 60; // How many frames per second the game should run at.
-	#if HAXEFLIXEL_LOGO
-	var skipSplash:Bool = false;
-	#else
-	var skipSplash:Bool = true; // CRINGE! Why would you hide it????
-	#end
-	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
+	public static var game = {
+		width = 1280,
+		height = 720,
+		initialState = states.InitState,
+		zoom: -1.0,
+		framerate: 60,
+		#if HAXEFLIXEL_LOGO
+		skipSplash = false,
+		#else
+		skipSplash = true,
+		#end
+		startFullscreen = false
+	};
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -69,16 +71,16 @@ class Main extends Sprite
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
-		if (zoom == -1)
+		if (zoom == -1.0)
 		{
-			var ratioX:Float = stageWidth / gameWidth;
-			var ratioY:Float = stageHeight / gameHeight;
-			zoom = Math.min(ratioX, ratioY);
-			gameWidth = Math.ceil(stageWidth / zoom);
-			gameHeight = Math.ceil(stageHeight / zoom);
+			var ratioX:Float = stageWidth / game.width;
+			var ratioY:Float = stageHeight / game.height;
+			game.zoom = Math.min(ratioX, ratioY);
+			gameWidth = Math.ceil(stageWidth / game.zoom);
+			gameHeight = Math.ceil(stageHeight / game.zoom);
 		}
 
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.skipSplash, game.startFullscreen));
 
 		#if !mobile
 		addChild(new ui.FPSMem(10, 3, 0xFFFFFF));
@@ -87,7 +89,7 @@ class Main extends Sprite
 
 	public static function setFPSCap(cap:Int)
 	{
-		Main.framerate=cap;
+		Main.game.framerate=cap;
 		updateFramerate();
 	}
 
@@ -95,15 +97,15 @@ class Main extends Sprite
 	// https://github.com/Yoshubs/Forever-Engine/blob/master/source/Main.hx
 
 	public static function updateFramerate(){
-		if (Main.framerate > FlxG.updateFramerate)
+		if (Main.game.framerate > FlxG.updateFramerate)
 		{
-			FlxG.updateFramerate = Main.framerate;
-			FlxG.drawFramerate = Main.framerate;
+			FlxG.updateFramerate = Main.game.framerate;
+			FlxG.drawFramerate = Main.game.framerate;
 		}
 		else
 		{
-			FlxG.drawFramerate = Main.framerate;
-			FlxG.updateFramerate = Main.framerate;
+			FlxG.drawFramerate = Main.game.framerate;
+			FlxG.updateFramerate = Main.game.framerate;
 		}
 	}
 

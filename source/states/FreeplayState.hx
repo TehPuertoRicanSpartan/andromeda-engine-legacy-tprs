@@ -14,7 +14,6 @@ import flixel.util.FlxColor;
 import lime.utils.Assets;
 import Options;
 import flixel.FlxObject;
-import flixel.input.mouse.FlxMouseEventManager;
 import flash.events.MouseEvent;
 import flixel.FlxState;
 import EngineData.WeekData;
@@ -208,7 +207,7 @@ class FreeplayState extends MusicBeatState
 			songText.isMenuItem = true;
 			songText.targetY = i;
 
-			FlxMouseEventManager.add(songText,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
+			//FlxMouseEventManager.add(songText,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
 			grpSongs.add(songText);
 
 			var icon:HealthIcon = new HealthIcon(songs[i].freeplayIcon);
@@ -217,7 +216,7 @@ class FreeplayState extends MusicBeatState
 			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);
 			add(icon);
-			FlxMouseEventManager.add(icon,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
+			//FlxMouseEventManager.add(icon,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
 
 			// songText.x += 40;
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!

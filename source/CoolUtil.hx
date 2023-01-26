@@ -162,4 +162,11 @@ class CoolUtil
 		}
 		return dumbArray;
 	}
+
+	public static function getSavePath(folder:String = 'ninjamuffin99'):String {
+		@:privateAccess
+		return #if (flixel < "5.0.0") folder #else FlxG.stage.application.meta.get('company')
+		+ '/'
+		+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
+	}
 }

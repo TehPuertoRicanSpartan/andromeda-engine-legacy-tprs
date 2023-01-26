@@ -19,7 +19,6 @@ import haxe.Exception;
 using StringTools;
 import flixel.util.FlxTimer;
 import Options;
-import flixel.input.mouse.FlxMouseEventManager;
 import ui.*;
 class MainMenuState extends MusicBeatState
 {
@@ -208,7 +207,7 @@ class MainMenuState extends MusicBeatState
 
 			gfDance.playAnim('danceLeft');
 
-			FlxMouseEventManager.add(gfDance,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
+			//FlxMouseEventManager.add(gfDance,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
 		}
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
@@ -231,7 +230,7 @@ class MainMenuState extends MusicBeatState
 					menuItem.scrollFactor.set();
 					menuItem.antialiasing = true;
 
-					FlxMouseEventManager.add(menuItem,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
+					//FlxMouseEventManager.add(menuItem,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
 				}
 		}
 		else
@@ -252,7 +251,7 @@ class MainMenuState extends MusicBeatState
 					menuItem.scrollFactor.set();
 					menuItem.antialiasing = true;
 
-					FlxMouseEventManager.add(menuItem,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
+					//FlxMouseEventManager.add(menuItem,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
 				}
 		}
 

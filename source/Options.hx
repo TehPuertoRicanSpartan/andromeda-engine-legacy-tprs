@@ -36,7 +36,7 @@ class OptionUtils
 	public static var options:Options = new Options();
 
 	public static function bindSave(?saveName:String="andromedaEngineOptions"){
-		saveFile.bind(saveName);
+		saveFile.bind(CoolUtil.getSavePath());
 	};
 	public static function saveOptions(options:Options){
 		var fields = Reflect.fields(options);

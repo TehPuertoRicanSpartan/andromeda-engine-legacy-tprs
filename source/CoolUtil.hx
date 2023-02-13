@@ -3,6 +3,7 @@ package;
 import lime.utils.Assets;
 import sys.thread.Thread;
 import flixel.FlxG;
+import flixel.util.FlxSave;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import openfl.media.Sound;

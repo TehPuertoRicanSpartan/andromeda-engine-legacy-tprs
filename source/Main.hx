@@ -32,7 +32,7 @@ class Main extends Sprite
 		#else
 		skipSplash = true,
 		#end
-		startFullscreen = false
+		startFullscreen = false,
 	};
 
 	// You can pretty much ignore everything from here on - your code should go in your states.

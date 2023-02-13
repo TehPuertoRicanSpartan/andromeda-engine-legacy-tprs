@@ -22,17 +22,17 @@ using StringTools;
 class Main extends Sprite
 {
 	public static var game = {
-		width = 1280,
-		height = 720,
-		initialState = states.InitState,
+		width: 1280,
+		height: 720,
+		initialState: states.InitState,
 		zoom: -1.0,
 		framerate: 60,
 		#if HAXEFLIXEL_LOGO
-		skipSplash = false,
+		skipSplash: false,
 		#else
-		skipSplash = true,
+		skipSplash: true,
 		#end
-		startFullscreen = false,
+		startFullscreen: false
 	};
 
 	// You can pretty much ignore everything from here on - your code should go in your states.

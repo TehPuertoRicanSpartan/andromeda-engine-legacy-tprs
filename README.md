@@ -1,5 +1,9 @@
 # BEFORE PUTTING AN ISSUE IN, MAKE SURE YOU'RE ON HAXE 4.2.5!
 
+# Friday Night Funkin: Andromeda Engine (TPRS Fork)
+
+This fork adds support for Flixel 5 (and removes mouse functions because of some fucking errors I can't resolve).
+
 # Friday Night Funkin: Andromeda Engine
 
 

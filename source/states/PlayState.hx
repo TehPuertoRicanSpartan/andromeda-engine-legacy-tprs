@@ -1927,8 +1927,7 @@ class PlayState extends MusicBeatState
 
 			var babyArrow:Receptor = new Receptor(0, 100, i, currentOptions.noteSkin, noteModifier, Note.noteBehaviour);
 			babyArrow.playerNum = pN;
-			if(player==1)
-				noteSplashes.add(babyArrow.noteSplash);
+			noteSplashes.add(babyArrow.noteSplash);
 
 
 			if(currentOptions.middleScroll && player==0)
@@ -2882,7 +2881,10 @@ class PlayState extends MusicBeatState
 						dadStrums.forEach(function(spr:Receptor)
 						{
 							if (Math.abs(daNote.noteData) == spr.ID)
-								spr.playNote(daNote);
+								if(!daNote.isSustainNote)
+									spr.playNote(daNote,(currentOptions.useNotesplashes && !daNote.isSustainNote));
+								else
+									spr.playNote(daNote);
 						});
 
 						var altAnim:String = "";

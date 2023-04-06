@@ -2881,10 +2881,7 @@ class PlayState extends MusicBeatState
 						dadStrums.forEach(function(spr:Receptor)
 						{
 							if (Math.abs(daNote.noteData) == spr.ID)
-								if(!daNote.isSustainNote)
-									spr.playNote(daNote,(currentOptions.useNotesplashes && !daNote.isSustainNote));
-								else
-									spr.playNote(daNote);
+								spr.playNote(daNote,(currentOptions.useNotesplashes && !daNote.isSustainNote));
 						});
 
 						var altAnim:String = "";

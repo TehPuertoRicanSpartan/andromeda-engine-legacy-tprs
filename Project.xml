@@ -186,7 +186,7 @@
 	<haxedef name="HXCPP_STACK_LINE" />    <!--if you want line numbers-->
 	<haxedef name="HXCPP_STACK_TRACE"/>    <!--if you want stack traces-->
 
-	<haxedef 'no-deprecation-warnings'/>
+	<haxedef name='no-deprecation-warnings'/>
 
 	<!-- _________________________________ Custom _______________________________ -->
 

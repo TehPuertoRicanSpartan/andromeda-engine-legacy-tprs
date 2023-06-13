@@ -5,6 +5,7 @@ import flixel.math.FlxPoint;
 import openfl.filters.BitmapFilter;
 import openfl.filters.ShaderFilter;
 import flixel.FlxG;
+import Main;
 import Shaders;
 import flixel.math.FlxMath;
 import flixel.FlxSprite;

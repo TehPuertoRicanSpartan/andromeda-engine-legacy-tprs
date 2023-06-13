@@ -132,7 +132,7 @@ class FNFCamera extends FlxCamera {
   }
 
   override function updateScroll(){
-    var zoom = this.zoom / Main.game.zoom;
+    var zoom = this.zoom / FlxG.initialZoom;
 
     var minX:Null<Float> = minScrollX == null ? null : minScrollX - (zoom - 1) * width / (2 * zoom);
     var maxX:Null<Float> = maxScrollX == null ? null : maxScrollX + (zoom - 1) * width / (2 * zoom);

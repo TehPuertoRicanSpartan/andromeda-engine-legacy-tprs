@@ -1750,7 +1750,7 @@ class PlayState extends MusicBeatState
 				swagNote.sustainLength = func(songNotes[2] / Conductor.stepCrochet) * Conductor.stepCrochet;
 				swagNote.scrollFactor.set(0, 0);
 				swagNote.shitId = unspawnNotes.length;
-				if(!setupSplashes.contains(swagNote.graphicType) && gottaHitNote){
+				if(!setupSplashes.contains(swagNote.graphicType)){
 					loadingSplash.setup(swagNote);
 					setupSplashes.push(swagNote.graphicType);
 				}

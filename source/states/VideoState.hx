@@ -9,9 +9,7 @@ import openfl.media.Video;
 import openfl.net.NetConnection;
 import openfl.net.NetStream;
 
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as VideoHandler;
-#else import vlc.VideoHandler; #end
+import vlc.VideoHandler;
 
 class VideoState extends MusicBeatState
 {

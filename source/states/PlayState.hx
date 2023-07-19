@@ -64,10 +64,7 @@ import openfl.display.GraphicsShader;
 import sys.io.File;
 import Section.Event;
 
-//thx to psych engine!!
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as VideoHandler;
-#else import vlc.VideoHandler; #end
+import vlc.VideoHandler;
 
 #if cpp
 import vm.lua.LuaVM;

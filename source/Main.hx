@@ -4,24 +4,12 @@ package;
 import Discord.DiscordClient;
 import sys.thread.Thread;
 #end
-import openfl.display.BlendMode;
-import openfl.text.TextFormat;
-import openfl.display.Application;
-import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
-import openfl.Assets;
 import openfl.Lib;
-import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
-import openfl.events.AsyncErrorEvent;
-import openfl.events.MouseEvent;
-import openfl.events.NetStatusEvent;
-import openfl.media.Video;
-import openfl.net.NetConnection;
-import openfl.net.NetStream;
 
 using StringTools;
 
@@ -69,10 +57,6 @@ class Main extends Sprite
 
 		setupGame();
 	}
-
-	var video:Video;
-	var netStream:NetStream;
-	private var overlay:Sprite;
 
 	private function setupGame():Void
 	{

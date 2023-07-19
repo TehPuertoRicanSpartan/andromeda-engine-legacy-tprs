@@ -317,7 +317,6 @@ class Paths
 		return 'assets/fonts/$key';
 	}
 
-
 	inline static public function characterSparrow(key:String, ?library:String)
 	{
 		return FlxAtlasFrames.fromSparrow(getPath('characters/images/$key.png', IMAGE, library), file('characters/images/$key.xml', library));

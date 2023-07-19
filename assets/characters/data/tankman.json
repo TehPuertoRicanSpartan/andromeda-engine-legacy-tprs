@@ -1,0 +1,86 @@
+{
+	"charOffset": [
+		0,
+		180
+	],
+	"singDur": 4,
+	"spritesheet": "tankmanCaptain",
+	"anims": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"prefix": "Tankman Idle Dance",
+			"looped": false,
+			"name": "idle"
+		},
+		{
+			"offsets": [
+				48,
+				54
+			],
+			"fps": 24,
+			"prefix": "Tankman UP note ",
+			"looped": false,
+			"name": "singUP"
+		},
+		{
+			"offsets": [
+				84,
+				-14
+			],
+			"fps": 24,
+			"prefix": "Tankman Right Note ",
+			"looped": false,
+			"name": "singLEFT"
+		},
+		{
+			"offsets": [
+				-21,
+				-31
+			],
+			"fps": 24,
+			"prefix": "Tankman Note Left ",
+			"looped": false,
+			"name": "singRIGHT"
+		},
+		{
+			"offsets": [
+				76,
+				-101
+			],
+			"fps": 24,
+			"prefix": "Tankman DOWN note ",
+			"looped": false,
+			"name": "singDOWN"
+		},
+		{
+			"offsets": [
+				-15,
+				-8
+			],
+			"fps": 24,
+			"prefix": "TANKMAN UGH",
+			"looped": false,
+			"name": "singUP-alt"
+		},
+		{
+			"offsets": [
+				1,
+				16
+			],
+			"fps": 24,
+			"prefix": "PRETTY GOOD",
+			"looped": false,
+			"name": "singDOWN-alt"
+		}
+	],
+	"flipX": true,
+	"antialiasing": true,
+	"iconName": "tankman",
+	"beatDancer": false,
+	"format": "andromeda",
+	"healthColor": "0xFFE1E1E1"
+}

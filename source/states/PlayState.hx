@@ -18,6 +18,7 @@ import flixel.util.FlxSpriteUtil;
 import flixel.FlxSprite;
 import flixel.util.FlxAxes;
 import flixel.FlxState;
+import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxSubState;
 import flixel.addons.display.FlxGridOverlay;
@@ -174,7 +175,7 @@ class PlayState extends MusicBeatState
 	public static var uiModifier:String='base';
 	var pressedKeys:Array<Bool> = [false,false,false,false];
 	var justPressedKeys:Array<Bool> = [false,false,false,false];
-	private var camZooming:Bool = true;
+	private var camZooming:Bool = (SONG.song.toLowerCase() != 'tutorial');
 	private var curSong:String = "";
 
 	private var gfSpeed:Int = 4;
@@ -275,7 +276,7 @@ class PlayState extends MusicBeatState
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
 
-	var inCutscene:Bool = false;
+	public static var inCutscene:Bool = false;
 
 	#if desktop
 	// Discord RPC variables
@@ -1031,9 +1032,8 @@ class PlayState extends MusicBeatState
 		}
 
 		if(currentOptions.staticCam==0)
-			focus = 'dad';
+			focus = (SONG.notes[0].mustHitSection ? 'bf' : 'dad');
 		updateCamFollow();
-
 
 		if (isStoryMode)
 		{
@@ -1067,13 +1067,25 @@ class PlayState extends MusicBeatState
 							});
 						});
 					});
-				case 'senpai':
+				case 'senpai' | 'roses' | 'thorns':
+					if (curSong.toLowerCase() == 'roses')
+						FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
-				case 'roses':
-					FlxG.sound.play(Paths.sound('ANGRY'));
-					schoolIntro(doof);
-				case 'thorns':
-					schoolIntro(doof);
+				case 'ugh' | 'guns' | 'stress':
+					FlxTransitionableState.skipNextTransIn = true;
+					var camShit:Map<String,Array<Dynamic>> = [
+						"ugh"=>[defaultCamZoom*1.2, -100, -200], //zoom, respective x, respective y
+						"guns"=>[defaultCamZoom*1.3, 0, 0],
+						"stress"=>[defaultCamZoom*1.5, 0, 0]
+					];
+					startVideo(curSong.toLowerCase() + 'Cutscene', function()
+					{
+						FlxG.camera.zoom = camShit.get(curSong.toLowerCase())[0];
+						FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
+
+						FlxG.camera.scroll.x = camShit.get(camFollow.x + curSong.toLowerCase())[1];
+						FlxG.camera.scroll.y = camShit.get(camFollow.y + curSong.toLowerCase())[2];
+					});
 				default:
 					startCountdown();
 			}
@@ -1288,6 +1300,24 @@ class PlayState extends MusicBeatState
 				remove(black);
 			}
 		});
+	}
+
+	function startVideo(name:String, ?finishCallbackFunc:Void->Void)
+	{
+		inCutscene = true;
+
+		var blackShit:FlxSprite = new FlxSprite(-200, -200).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+		blackShit.scrollFactor.set();
+		add(blackShit);
+
+		var vid:FlxVideo = new FlxVideo('videos/' + name + '.mp4');
+		vid.finishCallback = function()
+		{
+			if (finishCallbackFunc != null)
+				finishCallbackFunc();
+			remove(blackShit);
+			startCountdown();
+		};
 	}
 
 	var startTimer:FlxTimer;
@@ -1982,11 +2012,6 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function tweenCamIn():Void
-	{
-		FlxTween.tween(FlxG.camera, {zoom: 1.3}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
-	}
-
 	function updateAccuracy():Void
 	{
 		if(hitNotes==0 && totalNotes==0)
@@ -2015,7 +2040,7 @@ class PlayState extends MusicBeatState
 	}
 	override function openSubState(SubState:FlxSubState)
 	{
-		if (paused)
+		if (paused && !inCutscene)
 		{
 			if (inst != null)
 			{
@@ -2037,7 +2062,7 @@ class PlayState extends MusicBeatState
 
 	override function closeSubState()
 	{
-		if (paused)
+		if (paused && !inCutscene)
 		{
 
 			if(!startingSong)
@@ -2263,9 +2288,15 @@ class PlayState extends MusicBeatState
 				case 'dad':
 					focusedChar=opponent;
 					camFollow.setPosition(dadMid.x + opponent.camOffset.x, dadMid.y + opponent.camOffset.y);
+
+					if (SONG.song.toLowerCase() == 'tutorial')
+						FlxTween.tween(FlxG.camera, {zoom: 1.3}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
 				case 'bf':
 					focusedChar=boyfriend;
 					camFollow.setPosition(bfMid.x - stage.camOffset.x  + boyfriend.camOffset.x, bfMid.y - stage.camOffset.y + boyfriend.camOffset.y);
+
+					if (SONG.song.toLowerCase() == 'tutorial')
+						FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
 				case 'gf':
 					focusedChar=gf;
 					camFollow.setPosition(gfMid.x + gf.camOffset.x, gfMid.y + gf.camOffset.y);
@@ -4012,13 +4043,6 @@ class PlayState extends MusicBeatState
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);
 
-		// HARDCODING FOR MILF ZOOMS!
-		/*if (curSong.toLowerCase() == 'milf' && curBeat >= 168 && curBeat < 200 && camZooming && FlxG.camera.zoom < 1.35)
-		{
-			FlxG.camera.zoom += 0.015;
-			camHUD.zoom += 0.03;
-		}*/
-
 		if (camZooming && FlxG.camera.zoom < defaultCamZoom + 0.35 && curBeat % zoomBeatingInterval == 0)
 		{
 			FlxG.camera.zoom += zoomBeatingZoom;
@@ -4029,7 +4053,7 @@ class PlayState extends MusicBeatState
 
 
 		if(boyfriend.animation.curAnim!=null)
-			if (!boyfriend.isSinging)
+			if (!boyfriend.isSinging)a
 				boyfriend.dance();
 
 
@@ -4088,14 +4112,11 @@ class PlayState extends MusicBeatState
 
 		PlayState.songData=data.songs[0];
 	}
-	// eight equals equals equals D
+	
 	public function gotoNextStory(){
 		PlayState.inCharter=false;
 		PlayState.startPos = 0;
 		ChartingState.lastSection = 0;
-		if(8==D)
-			trace("cock penis!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
 		storyPlaylist.remove(storyPlaylist[0]);
 		if(storyPlaylist.length>0){
 			var songData = weekData.getByChartName(storyPlaylist[0]);

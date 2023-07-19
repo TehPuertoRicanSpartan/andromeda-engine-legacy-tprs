@@ -29,6 +29,7 @@ class MenuCharacter extends FlxSprite
 		'mom'=>{name:"Mom Idle BLACK LINES",xOffset:0, yOffset:-20, scale:.5, fps: 24, flipped: false, looped: true  },
 		'parents-christmas'=>{name:"Parent Christmas Idle",xOffset:-100, yOffset:50, scale:.8, fps: 24, flipped: false, looped: true  },
 		'senpai'=>{name:"SENPAI idle Black Lines",xOffset:-50, yOffset:100, scale:.7, fps: 24, flipped: false, looped: true  },
+		'tankman'=>{name:"Tankman Menu BLACK",xOffset:0, yOffset:30, scale:.6, fps: 24, flipped: false, looped: true  },
 	];
 
 	public function setCharacter(char:String){

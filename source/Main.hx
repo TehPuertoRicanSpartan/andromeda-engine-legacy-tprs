@@ -16,6 +16,12 @@ import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
+import openfl.events.AsyncErrorEvent;
+import openfl.events.MouseEvent;
+import openfl.events.NetStatusEvent;
+import openfl.media.Video;
+import openfl.net.NetConnection;
+import openfl.net.NetStream;
 
 using StringTools;
 
@@ -64,6 +70,10 @@ class Main extends Sprite
 		setupGame();
 	}
 
+	var video:Video;
+	var netStream:NetStream;
+	private var overlay:Sprite;
+
 	private function setupGame():Void
 	{
 		var stageWidth:Int = Lib.current.stage.stageWidth;
@@ -83,6 +93,30 @@ class Main extends Sprite
 		#if !mobile
 		addChild(new ui.FPSMem(10, 3, 0xFFFFFF));
 		#end
+		/* 
+			video = new Video();
+			addChild(video);
+
+			var netConnection = new NetConnection();
+			netConnection.connect(null);
+
+			netStream = new NetStream(netConnection);
+			netStream.client = {onMetaData: client_onMetaData};
+			netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, netStream_onAsyncError);
+
+			#if (js && html5)
+			overlay = new Sprite();
+			overlay.graphics.beginFill(0, 0.5);
+			overlay.graphics.drawRect(0, 0, 560, 320);
+			overlay.addEventListener(MouseEvent.MOUSE_DOWN, overlay_onMouseDown);
+			overlay.buttonMode = true;
+			addChild(overlay);
+
+			netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnection_onNetStatus);
+			#else
+			netStream.play("assets/preload/music/dredd.mp4");
+			#end 
+		 */
 	}
 
 	public static function setFPSCap(cap:Int)
@@ -115,4 +149,28 @@ class Main extends Sprite
 	{
 		return FlxG.drawFramerate;
 	}
+
+	/* 
+		private function client_onMetaData(metaData:Dynamic)
+		{
+			video.attachNetStream(netStream);
+
+			video.width = video.videoWidth;
+			video.height = video.videoHeight;
+		}
+
+		private function netStream_onAsyncError(event:AsyncErrorEvent):Void
+		{
+			trace("Error loading video");
+		}
+
+		private function netConnection_onNetStatus(event:NetStatusEvent):Void
+		{
+		}
+
+		private function overlay_onMouseDown(event:MouseEvent):Void
+		{
+			netStream.play("assets/preload/music/dredd.mp4");
+		}
+	 */
 }

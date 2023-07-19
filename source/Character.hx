@@ -1,5 +1,7 @@
 package;
 
+import Section.SwagSection;
+import flixel.util.FlxSort;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
@@ -66,6 +68,7 @@ class Character extends FlxSprite
 	var idleAnims:Array<String> = ['danceLeft','danceRight','idle'];
 	public var beatDancer:Bool = false;
 	public var charPath:String='';
+	public var animationNotes:Array<Dynamic> = [];
 
 	public var iconNames:Map<String,String> = [
 		"bf-car"=>"bf",
@@ -75,7 +78,10 @@ class Character extends FlxSprite
 		"gf-car"=>"gf",
 		"gf-christmas"=>"gf",
 		"monster-christmas"=>"monster",
-		"senpai-angry"=>"senpai"
+		"senpai-angry"=>"senpai",
+		"gf-tankmen"=>"gf",
+		"bf-holding-gf"=>"bf",
+		"pico-speaker"=>"pico"
 	];
 
 	public var iconColors:Map<String,FlxColor> = [ // uses icon names
@@ -89,7 +95,8 @@ class Character extends FlxSprite
 		"mom"=>0xFFD8558E,
 		"parents-christmas"=>0xFFC45EAE,
 		"senpai"=>0xFFFFAA6F,
-		"spirit"=>0xFFFF3C6E
+		"spirit"=>0xFFFF3C6E,
+		"tankman"=>0xFFE1E1E1
 	];
 
 	override public function destroy(){
@@ -310,7 +317,39 @@ class Character extends FlxSprite
 				playAnim("danceRight");
 
 			dance();
+
+			switch(curCharacter)
+			{
+				case 'pico-speaker':
+					loadMappedAnims();
+					playAnim('shoot1');
+			}
 		}
+	}
+
+	public function loadMappedAnims()
+	{
+		var swagshit = Song.loadFromJson('picospeaker', 'stress');
+
+		var notes = swagshit.notes;
+
+		for (section in notes)
+		{
+			for (idk in section.sectionNotes)
+			{
+				animationNotes.push(idk);
+			}
+		}
+
+		TankmenBG.animationNotes = animationNotes;
+	
+		trace(animationNotes);
+		animationNotes.sort(sortAnims);
+	}
+
+	function sortAnims(val1:Array<Dynamic>, val2:Array<Dynamic>):Int
+	{
+		return FlxSort.byValues(FlxSort.ASCENDING, val1[0], val2[0]);
 	}
 
 	public function leftToRight(){
@@ -430,6 +469,30 @@ class Character extends FlxSprite
 				case 'gf':
 					if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
 						playAnim('danceRight');
+				case "pico-speaker":
+					// for pico??
+					if (animationNotes.length > 0)
+					{
+						if (Conductor.songPosition > animationNotes[0][0])
+						{
+							trace('played shoot anim' + animationNotes[0][1]);
+	
+							var shootAnim:Int = 1;
+		
+							if (animationNotes[0][1] >= 2)
+								shootAnim = 3;
+	
+							shootAnim += FlxG.random.int(0, 1);
+		
+							playAnim('shoot' + shootAnim, true);
+							animationNotes.shift();
+						}
+					}
+		
+					if (animation.curAnim.finished)
+					{
+						playAnim(animation.curAnim.name, false, false, animation.curAnim.numFrames - 3);
+					}
 			}
 		}
 
@@ -478,7 +541,8 @@ class Character extends FlxSprite
 				}
 
 			}else{
-				playAnim("idle",forced);
+				if (curCharacter == 'tankman' && !animation.curAnim.name.endsWith('DOWN-alt'))
+					playAnim("idle",forced);
 			}
 		}
 	}

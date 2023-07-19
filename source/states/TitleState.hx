@@ -34,7 +34,7 @@ using StringTools;
 
 class TitleState extends MusicBeatState
 {
-	static var initialized:Bool = false;
+	public static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
@@ -217,6 +217,9 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		else
 			initialized = true;
+
+		if (FlxG.sound.music != null)
+			FlxG.sound.music.onComplete = function() FlxG.switchState(new VideoState());
 
 		// credGroup.add(credTextShit);
 	}
@@ -403,17 +406,18 @@ class TitleState extends MusicBeatState
 			// credTextShit.text += '\nlmao';
 			case 12:
 				deleteCoolText();
+				addMoreText('Friday');
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Friday');
+				addMoreText('Night');
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('Night');
+				addMoreText('Funkin');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				addMoreText('Andromeda Engine'); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();

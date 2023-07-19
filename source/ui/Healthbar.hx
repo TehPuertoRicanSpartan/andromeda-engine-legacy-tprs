@@ -35,13 +35,12 @@ class Healthbar extends FlxSpriteGroup {
     bar = new FlxBar(bg.x + 4, bg.y + 4, RIGHT_TO_LEFT, Std.int(bg.width - 8), Std.int(bg.height - 8), this, 'display', min, max);
     bar.createFilledBar(baseColor,secondaryColor);
 
-
     iconP1 = new HealthIcon(player1, true);
     iconP1.y = bar.y - (iconP1.height / 2);
 
-
     iconP2 = new HealthIcon(player2, false);
     iconP2.y = bar.y - (iconP2.height / 2);
+
     add(bg);
     add(bar);
     add(iconP1);
@@ -104,7 +103,5 @@ class Healthbar extends FlxSpriteGroup {
       iconP2.animation.curAnim.curFrame = iconP2.neutralIndex;
 
     super.update(elapsed);
-
-
   }
 }

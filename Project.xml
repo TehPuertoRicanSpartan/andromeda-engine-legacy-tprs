@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Andromeda Engine" file="Funkin" packageName="com.ninjamuffin99.funkin" package="com.ninjamuffin99.funkin" main="Main" version="0.2.7.1" company="ninjamuffin99" />
+	<app title="Friday Night Funkin': Andromeda Engine" file="Funkin" packageName="com.ninjamuffin99.funkin" package="com.ninjamuffin99.funkin" main="Main" version="0.2.8" company="ninjamuffin99" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -53,7 +53,7 @@
 
 		NOTE: if you use FORCED_JUDGE and want your own judgement windows, make sure to set the preset in EngineData.hx!
 	-->
-	<define name="HAXEFLIXEL_LOGO"/> <!--Allows the Haxeflixel watermark to show on startup when compiled as release;.-->
+	<!--<define name="HAXEFLIXEL_LOGO"/> --> <!--Allows the Haxeflixel watermark to show on startup when compiled as release;.-->
 	<!-- <define name="NO_BOTPLAY" unless="debug"/> --> <!--Disables the ability to use botplay-->
 	<!-- <define name="DISABLE_CHART_EDITOR" unless="debug"/> -->  <!--Disables the ability to use the chart editor ingame-->
 	<!-- <define name="DISABLE_CHARACTER_EDITOR" unless="debug"/> -->  <!--Disables the ability to use the character editor ingame-->
@@ -78,6 +78,7 @@
 		<library name="week4"    preload="true" />
 		<library name="week5"    preload="true" />
 		<library name="week6"    preload="true" />
+		<library name="week7"    preload="true" />
 	</section>
 
 	<section if="NO_PRELOAD_ALL">
@@ -91,6 +92,7 @@
 		<library name="week4"    preload="false" />
 		<library name="week5"    preload="false" />
 		<library name="week6"    preload="false" />
+		<library name="week7"    preload="false" />
 	</section>
 
 	<assets path="assets/characters" library="characters" />
@@ -113,8 +115,10 @@
 	<assets path="assets/week5"    library="week5"    exclude="*.mp3" unless="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.ogg" if="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.mp3" unless="web"/>
+	<assets path="assets/week7"    library="week7"    exclude="*.ogg" if="web"/>
+	<assets path="assets/week7"    library="week7"    exclude="*.mp3" unless="web"/>
 
-	<assets path='example_mods' rename='mods' embed='false'/>
+	<!--<assets path='example_mods' rename='mods' embed='false'/>-->
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
 	<!-- <template path='mods' /> -->
 
@@ -185,6 +189,8 @@
 	<haxedef name="HXCPP_CHECK_POINTER"/>  <!--makes null references cause errors-->
 	<haxedef name="HXCPP_STACK_LINE" />    <!--if you want line numbers-->
 	<haxedef name="HXCPP_STACK_TRACE"/>    <!--if you want stack traces-->
+
+	<haxedef name="HXCPP_GC_BIG_BLOCKS"/>
 
 	<haxedef name='no-deprecation-warnings'/>
 

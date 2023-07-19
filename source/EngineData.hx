@@ -369,6 +369,11 @@ class EngineData {
       "Roses",
       new SongData("Thorns","spirit",6),
     ]),
+    new WeekData("TANKMAN",7,'tankman',[
+      "Ugh",
+      "Guns",
+      new SongData("Stress","tankman",7),
+    ]),
   ];
 
   // DON'T EDIT BEYOND THIS POINT!

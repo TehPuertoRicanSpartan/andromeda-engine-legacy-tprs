@@ -1,0 +1,50 @@
+{
+	"charOffset": [
+		0,
+		0
+	],
+	"camOffset": [
+		0,
+		0
+	],
+	"anims": [
+		{
+			"offsets": [
+				37,
+				14
+			],
+			"fps": 24,
+			"prefix": "BF Dies with GF",
+			"looped": false,
+			"name": "firstDeath"
+		},
+		{
+			"offsets": [
+				37,
+				-3
+			],
+			"fps": 24,
+			"prefix": "BF Dead with GF Loop",
+			"looped": true,
+			"name": "deathLoop"
+		},
+		{
+			"offsets": [
+				37,
+				28
+			],
+			"fps": 24,
+			"prefix": "RETRY confirm holding gf",
+			"looped": false,
+			"name": "deathConfirm"
+		}
+	],
+	"spritesheet": "bfHoldingGF-DEAD",
+	"singDur": 4,
+	"flipX": true,
+	"antialiasing": true,
+	"iconName": "bf",
+	"beatDancer": false,
+	"healthColor": "0xFF31B0D1",
+	"format": "andromeda"
+}

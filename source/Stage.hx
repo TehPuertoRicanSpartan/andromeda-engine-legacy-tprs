@@ -8,6 +8,7 @@ import flixel.input.FlxKeyManager;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxAngle;
 import flixel.util.FlxTimer;
 import flixel.util.FlxDestroyUtil;
 import flixel.math.FlxPoint;
@@ -35,6 +36,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
     "senpai"=>"school",
     "roses"=>"school",
     "thorns"=>"schoolEvil",
+    "ugh"=>"tank",
+    "guns"=>"tank",
+    "stress"=>"tank",
     "bopeebo"=>"stage",
     "fresh"=>"stage",
     "dadbattle"=>"stage",
@@ -50,6 +54,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
     "mallEvil",
     "school",
     "schoolEvil",
+    "tank",
     "blank"
   ];
 
@@ -79,6 +84,23 @@ class Stage extends FlxTypedGroup<FlxBasic> {
   public var fastCar:FlxSprite;
   public var limo:FlxSprite;
   var fastCarCanDrive:Bool=true;
+
+  // tank bg
+  var tankmanRun:FlxTypedGroup<TankmenBG>;
+  var tankWatchtower:BGSprite;
+	var tankGround:BGSprite;
+
+  //fuck you foreground for being FlxBasic -TPRS
+  var fgTank0:BGSprite;
+  var fgTank1:BGSprite;
+  var fgTank2:BGSprite;
+  var fgTank4:BGSprite;
+  var fgTank5:BGSprite;
+  var fgTank3:BGSprite;
+
+  var tankAngle:Float = FlxG.random.int(-90, 45);
+	var tankSpeed:Float = FlxG.random.float(5, 7);
+	var tankX:Float = 400;
 
   // misc, general bg stuff
 
@@ -508,6 +530,114 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
         centerX = skyBG.getMidpoint().x+100;
         centerY = skyBG.getMidpoint().y-100;
+      case 'tank':
+        gfVersion = (PlayState.SONG.song.toLowerCase() == 'stress' ? 'pico-speaker' : 'gf-tankmen');
+        defaultCamZoom = 0.9;
+				curStage = 'tank';
+        gfPosition.y += 10;
+				gfPosition.x -= 30;
+				bfPosition.x += 40;
+				dadPosition.y += 60;
+				dadPosition.x -= 80;
+
+				if (gfVersion != 'pico-speaker')
+				{
+					gfPosition.x -= 170;
+					gfPosition.y -= 75;
+				}
+
+				var bg:BGSprite = new BGSprite('tankSky', -400, -400, 0, 0);
+				add(bg);
+
+				var tankSky:BGSprite = new BGSprite('tankClouds', FlxG.random.int(-700, -100), FlxG.random.int(-20, 20), 0.1, 0.1);
+				tankSky.active = true;
+				tankSky.velocity.x = FlxG.random.float(5, 15);
+				add(tankSky);
+
+				var tankMountains:BGSprite = new BGSprite('tankMountains', -300, -20, 0.2, 0.2);
+				tankMountains.setGraphicSize(Std.int(tankMountains.width * 1.2));
+				tankMountains.updateHitbox();
+				add(tankMountains);
+
+				var tankBuildings:BGSprite = new BGSprite('tankBuildings', -200, 0, 0.30, 0.30);
+				tankBuildings.setGraphicSize(Std.int(tankBuildings.width * 1.1));
+				tankBuildings.updateHitbox();
+				add(tankBuildings);
+
+				var tankRuins:BGSprite = new BGSprite('tankRuins', -200, 0, 0.35, 0.35);
+				tankRuins.setGraphicSize(Std.int(tankRuins.width * 1.1));
+				tankRuins.updateHitbox();
+				add(tankRuins);
+
+				var smokeLeft:BGSprite = new BGSprite('smokeLeft', -200, -100, 0.4, 0.4, ['SmokeBlurLeft'], true);
+				add(smokeLeft);
+
+				var smokeRight:BGSprite = new BGSprite('smokeRight', 1100, -100, 0.4, 0.4, ['SmokeRight'], true);
+				add(smokeRight);
+
+				// tankGround.
+
+				tankWatchtower = new BGSprite('tankWatchtower', 100, 50, 0.5, 0.5, ['watchtower gradient color']);
+				add(tankWatchtower);
+
+				tankGround = new BGSprite('tankRolling', 300, 300, 0.5, 0.5, ['BG tank w lighting'], true);
+				add(tankGround);
+				// tankGround.active = false;
+
+				tankmanRun = new FlxTypedGroup<TankmenBG>();
+				add(tankmanRun);
+
+				var tankGround:BGSprite = new BGSprite('tankGround', -420, -150);
+				tankGround.setGraphicSize(Std.int(tankGround.width * 1.15));
+				tankGround.updateHitbox();
+				add(tankGround);
+
+				moveTank();
+
+				// smokeLeft.screenCenter();
+
+				fgTank0 = new BGSprite('tank0', -500, 650, 1.7, 1.5, ['fg']);
+				foreground.add(fgTank0);
+
+				fgTank1 = new BGSprite('tank1', -300, 750, 2, 0.2, ['fg']);
+				foreground.add(fgTank1);
+
+				// just called 'foreground' just cuz small inconsistency no bbiggei
+				fgTank2 = new BGSprite('tank2', 450, 940, 1.5, 1.5, ['foreground']);
+				foreground.add(fgTank2);
+
+				fgTank4 = new BGSprite('tank4', 1300, 900, 1.5, 1.5, ['fg']);
+				foreground.add(fgTank4);
+
+				fgTank5 = new BGSprite('tank5', 1620, 700, 1.5, 1.5, ['fg']);
+				foreground.add(fgTank5);
+
+				fgTank3 = new BGSprite('tank3', 1300, 1200, 3.5, 2.5, ['fg']);
+				foreground.add(fgTank3);
+
+        switch (gfVersion)
+        {
+          case 'pico-speaker':
+            gfPosition.x -= 50;
+				    gfPosition.y -= 200;
+
+    				var tempTankman:TankmenBG = new TankmenBG(20, 500, true);
+		    		tempTankman.strumTime = 10;
+				    tempTankman.resetShit(20, 600, true);
+				    tankmanRun.add(tempTankman);
+
+				    for (i in 0...TankmenBG.animationNotes.length)
+				    {
+				    	if (FlxG.random.bool(16))
+				    	{
+				    		var tankman:TankmenBG = tankmanRun.recycle(TankmenBG);
+				    		// new TankmenBG(500, 200 + FlxG.random.int(50, 100), TankmenBG.animationNotes[i][1] < 2);
+				    		tankman.strumTime = TankmenBG.animationNotes[i][0];
+				    		tankman.resetShit(500, 200 + FlxG.random.int(50, 100), TankmenBG.animationNotes[i][1] < 2);
+				    		tankmanRun.add(tankman);
+				    	}
+				    }
+        }
       case 'blank':
 
       default:
@@ -587,9 +717,19 @@ class Stage extends FlxTypedGroup<FlxBasic> {
             trainCooldown = FlxG.random.int(-4, 0);
             trainStart();
           }
+        case 'tank':
+          tankWatchtower.dance();
+
+          fgTank0.dance();
+          fgTank1.dance();
+          fgTank2.dance();
+          fgTank4.dance();
+          fgTank5.dance();
+          fgTank3.dance();
       }
     }
   }
+
 
   override function update(elapsed:Float){
     switch(curStage){
@@ -605,6 +745,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
           }
         }
         lightFadeShader.addAlpha((Conductor.crochet / 1000) * FlxG.elapsed * 1.5);
+      case 'tank':
+        if (!PlayState.inCutscene)
+          moveTank();
     }
 
 
@@ -648,6 +791,16 @@ class Stage extends FlxTypedGroup<FlxBasic> {
     }
   }
 
+  function moveTank():Void
+  {
+    var daAngleOffset:Float = 1;
+    tankAngle += FlxG.elapsed * tankSpeed;
+    tankGround.angle = tankAngle - 90 + 15;
+
+    tankGround.x = tankX + Math.cos(FlxAngle.asRadians((tankAngle * daAngleOffset) + 180)) * 1500;
+    tankGround.y = 1300 + Math.sin(FlxAngle.asRadians((tankAngle * daAngleOffset) + 180)) * 1100;
+  }
+  
   function trainReset():Void
   {
     gf.playAnim('hairFall');

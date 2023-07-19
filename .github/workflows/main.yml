@@ -45,13 +45,19 @@ jobs:
           haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
-          haxelib install hxCodec 2.5.1
+          haxelib install hxCodec
           haxelib git hxvm-luajit https://github.com/nebulazorua/hxvm-luajit
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
+          haxelib install refactor
+          haxelib run refactor -v replace source *.hx "/vlc\.(MP4Handler|VideoHandler)/hxcodec.VideoHandler/"
+          haxelib run refactor -v replace source *.hx "/import hxcodec\.VideoHandler;/$0\nimport hxcodec.VideoSprite;/"
+          haxelib run refactor -v replace source *.hx "/MP4Handler/VideoHandler/"
+          haxelib update hxCodec
+          haxelib set hxCodec 2.6.1
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -87,13 +93,19 @@ jobs:
           haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
-          haxelib install hxCodec 2.5.1
+          haxelib install hxCodec
           haxelib git hxvm-luajit https://github.com/nebulazorua/hxvm-luajit
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
+          haxelib install refactor
+          haxelib run refactor -v replace source *.hx "/vlc\.(MP4Handler|VideoHandler)/hxcodec.VideoHandler/"
+          haxelib run refactor -v replace source *.hx "/import hxcodec\.VideoHandler;/$0\nimport hxcodec.VideoSprite;/"
+          haxelib run refactor -v replace source *.hx "/MP4Handler/VideoHandler/"
+          haxelib update hxCodec
+          haxelib set hxCodec 2.6.1
           haxelib list
         shell: cmd
       - name: Create Version Tag
@@ -130,13 +142,19 @@ jobs:
           haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
-          haxelib install hxCodec 2.5.1
+          haxelib install hxCodec
           haxelib git hxvm-luajit https://github.com/nebulazorua/hxvm-luajit
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
+          haxelib install refactor
+          haxelib run refactor -v replace source *.hx "/vlc\.(MP4Handler|VideoHandler)/hxcodec.VideoHandler/"
+          haxelib run refactor -v replace source *.hx "/import hxcodec\.VideoHandler;/$0\nimport hxcodec.VideoSprite;/"
+          haxelib run refactor -v replace source *.hx "/MP4Handler/VideoHandler/"
+          haxelib update hxCodec
+          haxelib set hxCodec 2.6.1
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION

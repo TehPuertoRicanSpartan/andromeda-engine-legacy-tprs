@@ -64,6 +64,11 @@ import openfl.display.GraphicsShader;
 import sys.io.File;
 import Section.Event;
 
+//thx to psych engine!!
+#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
+#elseif (hxCodec == "2.6.0") import VideoHandler as VideoHandler;
+#else import vlc.VideoHandler; #end
+
 #if cpp
 import vm.lua.LuaVM;
 import vm.lua.Exception;
@@ -1310,7 +1315,8 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		var vid:FlxVideo = new FlxVideo('videos/' + name + '.mp4');
+		var vid:VideoHandler = new VideoHandler();
+		vid.playVideo(Paths.file('assets/preload/videos/$name.mp4'));
 		vid.finishCallback = function()
 		{
 			if (finishCallbackFunc != null)
@@ -4053,7 +4059,7 @@ class PlayState extends MusicBeatState
 
 
 		if(boyfriend.animation.curAnim!=null)
-			if (!boyfriend.isSinging)a
+			if (!boyfriend.isSinging)
 				boyfriend.dance();
 
 

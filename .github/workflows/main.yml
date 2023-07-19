@@ -57,7 +57,7 @@ jobs:
           haxelib run refactor -v replace source *.hx "/import hxcodec\.VideoHandler;/$0\nimport hxcodec.VideoSprite;/"
           haxelib run refactor -v replace source *.hx "/MP4Handler/VideoHandler/"
           haxelib update hxCodec
-          haxelib set hxCodec 2.6.1
+          haxelib set hxCodec 2.5.1
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -105,7 +105,7 @@ jobs:
           haxelib run refactor -v replace source *.hx "/import hxcodec\.VideoHandler;/$0\nimport hxcodec.VideoSprite;/"
           haxelib run refactor -v replace source *.hx "/MP4Handler/VideoHandler/"
           haxelib update hxCodec
-          haxelib set hxCodec 2.6.1
+          haxelib set hxCodec 2.5.1
           haxelib list
         shell: cmd
       - name: Create Version Tag
@@ -154,7 +154,7 @@ jobs:
           haxelib run refactor -v replace source *.hx "/import hxcodec\.VideoHandler;/$0\nimport hxcodec.VideoSprite;/"
           haxelib run refactor -v replace source *.hx "/MP4Handler/VideoHandler/"
           haxelib update hxCodec
-          haxelib set hxCodec 2.6.1
+          haxelib set hxCodec 2.5.1
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION

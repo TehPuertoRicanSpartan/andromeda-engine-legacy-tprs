@@ -64,7 +64,7 @@ import openfl.display.GraphicsShader;
 import sys.io.File;
 import Section.Event;
 
-import vlc.VideoHandler;
+import hxcodec.flixel.FlxVideo;
 
 #if cpp
 import vm.lua.LuaVM;
@@ -1312,15 +1312,17 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		var vid:VideoHandler = new VideoHandler();
-		vid.playVideo(Paths.file('assets/preload/videos/$name.mp4'));
-		vid.finishCallback = function()
+		var vid:FlxVideo = new FlxVideo();
+		vid.play(Paths.file('assets/preload/videos/$name.mp4'));
+		vid.onEndReached.add(function()
 		{
+			vid.dispose();
 			if (finishCallbackFunc != null)
 				finishCallbackFunc();
 			remove(blackShit);
 			startCountdown();
-		};
+			return;
+		}, true);
 	}
 
 	var startTimer:FlxTimer;

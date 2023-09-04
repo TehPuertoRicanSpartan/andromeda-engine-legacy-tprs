@@ -541,7 +541,7 @@ class Character extends FlxSprite
 				}
 
 			}else{
-				if (curCharacter == 'tankman' && !animation.curAnim.name.endsWith('DOWN-alt'))
+				if (!animation.curAnim.name.endsWith('DOWN-alt'))
 					playAnim("idle",forced);
 			}
 		}

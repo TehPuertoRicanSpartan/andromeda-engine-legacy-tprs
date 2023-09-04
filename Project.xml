@@ -194,7 +194,7 @@
 
 	<haxedef name="HXCPP_GC_BIG_BLOCKS"/>
 
-	<haxedef name='no-deprecation-warnings'/>
+	<haxedef name="no-deprecation-warnings"/>
 
 	<!-- _________________________________ Custom _______________________________ -->
 
